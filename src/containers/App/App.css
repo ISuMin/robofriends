@@ -1,0 +1,35 @@
+@font-face {
+  font-family: 'SEGA LOGO FONT';
+  font-style: normal;
+  font-weight: normal;
+  src: local('SEGA LOGO FONT'), url('SEGA.woff') format('woff');
+}
+
+.app-header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: flex-end;
+  text-align: center;
+  font-size: calc(10px + 2vmin);
+  background-color: #333333;
+  height: 18vh;
+  min-height: 140px;
+  color: white;
+}
+
+h1 {
+  font-family: 'SEGA LOGO FONT';
+  font-weight: 400;
+  margin: 20px auto;
+  color: #42E8F7;
+  text-align: center;
+  animation: 3s linear 1s infinite breeze;
+}
+
+@keyframes breeze {
+  0% { color: white; }
+  25% { color: #42E8F7; }
+  75% { color: #42E8F7; }
+  100% { color: white; }
+}

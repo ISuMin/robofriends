@@ -1,0 +1,19 @@
+input[type='search'] {
+  padding: 10px 20px;
+  font-size: 18px;
+  border-radius: 5px;
+  border: none;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #444444;
+  font-family: Roboto, 'Segoe UI', 'Open Sans', sans-serif;
+}
+input::placeholder,
+input::-moz-placeholder,
+input::-webkit-input-placeholder {
+  opacity: 0.3;
+}
+
+input[type='search']:focus {
+  box-shadow: 0 0 3px aqua;
+}
