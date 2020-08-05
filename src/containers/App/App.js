@@ -4,39 +4,37 @@ import ErrorBoundry from '../ErrorBoundry/ErrorBoundry';
 import SearchBar from '../../components/SearchBar/SearchBar'
 import CardList from '../../components/CardList/CardList';
 import Scroll from '../../components/Scroll/Scroll';
-import { setSearchField } from '../../actions';
+import { setSearchField, requestRobots } from '../../actions';
 import './App.css';
 
 const mapStateToProps = state => {
-  return { searchField: state.searchField }
+  return { 
+    searchField: state.searchRobots.searchField,
+    robots: state.requestRobots.robots,
+    isPending: state.requestRobots.isPending,
+    error: state.requestRobots.error
+  }
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return { onSearchChange: (event) => dispatch(setSearchField(event.target.value)) }
+  return { 
+    onSearchChange: (event) => dispatch(setSearchField(event.target.value)),
+    onRequestRobots: () => dispatch(requestRobots())
+  }
 }
 
 class App extends Component {
 
-  constructor(props) {
-    super(props)
-    this.state = {
-      robots : [],
-    }
-  }
-
   componentDidMount() {
-    fetch('https://jsonplaceholder.typicode.com/users')
-      .then( response => response.json())
-      .then( users => this.setState({robots: users}))
+    this.props.onRequestRobots();
   }
 
   render() {
 
-    const { robots } = this.state;
-    const { searchField, onSearchChange } = this.props;
+    const { searchField, onSearchChange, robots, isPending } = this.props;
     const filteredRobots = robots.filter(robot => robot.name.toLowerCase().includes(searchField.toLowerCase()));
 
-    return !robots.length ? <h1>Loading</h1> : (
+    return isPending ? <h1>Loading</h1> : (
       <Fragment>
         <header className="app-header">
           <h1>Robo Friends</h1>
