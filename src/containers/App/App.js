@@ -1,17 +1,26 @@
 import React, { Component, Fragment } from 'react'
+import { connect } from 'react-redux';
 import ErrorBoundry from '../ErrorBoundry/ErrorBoundry';
 import SearchBar from '../../components/SearchBar/SearchBar'
 import CardList from '../../components/CardList/CardList';
 import Scroll from '../../components/Scroll/Scroll';
+import { setSearchField } from '../../actions';
 import './App.css';
 
-export default class App extends Component {
+const mapStateToProps = state => {
+  return { searchField: state.searchField }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return { onSearchChange: (event) => dispatch(setSearchField(event.target.value)) }
+}
+
+class App extends Component {
 
   constructor(props) {
     super(props)
     this.state = {
       robots : [],
-      searchfield: ''
     }
   }
 
@@ -21,20 +30,17 @@ export default class App extends Component {
       .then( users => this.setState({robots: users}))
   }
 
-  onSearchChange = (e) => {
-    this.setState({ searchfield: e.target.value })
-  }
-
   render() {
 
-    const { robots, searchfield } = this.state;
-    const filteredRobots = robots.filter(robot => robot.name.toLowerCase().includes(searchfield.toLowerCase()));
+    const { robots } = this.state;
+    const { searchField, onSearchChange } = this.props;
+    const filteredRobots = robots.filter(robot => robot.name.toLowerCase().includes(searchField.toLowerCase()));
 
     return !robots.length ? <h1>Loading</h1> : (
       <Fragment>
         <header className="app-header">
           <h1>Robo Friends</h1>
-          <SearchBar searchChange = {this.onSearchChange}/>
+          <SearchBar searchChange = {onSearchChange}/>
         </header>
         <Scroll>
           <ErrorBoundry>
@@ -46,3 +52,5 @@ export default class App extends Component {
   }
 
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(App)
