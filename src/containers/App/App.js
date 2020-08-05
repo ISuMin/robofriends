@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react'
-import ErrorBoundry from '../../components/ErrorBoundry/ErrorBoundry';
+import ErrorBoundry from '../ErrorBoundry/ErrorBoundry';
 import SearchBar from '../../components/SearchBar/SearchBar'
 import CardList from '../../components/CardList/CardList';
 import Scroll from '../../components/Scroll/Scroll';
